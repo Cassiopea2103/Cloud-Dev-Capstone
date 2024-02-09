@@ -18,8 +18,8 @@
 
     <body>
     <!--Navbar-->
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
+    <nav class="navbar navbar-light bg-light flex-row align-items-center">
+        <div class="container-fluid bgp">
             <!-- Navbar Brand -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="{% url 'home' %}">
@@ -34,33 +34,46 @@
                 </a>
             </div>
 
+            <!-- Display login informations: -->
+            <div class="nav navbar-nav navbar-left col-5">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="text-{{ message.tags }} text-right lead">
+                            {{ message }}
+                        </div>                      
+                    {% endfor %}
+                {% endif %}
+                    
+            </div>
+
+
             <!-- Navbar items -->
-            <ul class="nav navbar-nav navbar-right flex-row align-items-center ">
-                <!-- About Us -->
-                <li>
-                    <a class="m-3" href="{% url 'about' %}">About Us</a>
-                </li>
+            <ul class="nav navbar-nav navbar-right flex-row align-items-center">
                 <!-- Authenticated user ( display logout options and user infos ) -->
                 {% if user.is_authenticated %}
                 <li>
-                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
-                    <a class="btn btn-link" href="logout">Logout</a>
+                    <a class="btn btn-link" href="#">({{ user.username }})</a>
+                    <a class="btn btn-link" href="{% url 'logout' %}">Logout</a>
                 </li>
         
                 {% else %}
                 <!-- Registration Form / Login option -->
                 <li>
-                    <form class="form-inline" action="" method="post">
+                    <form class="form-inline" action="{% url 'login' %}" method="post">
                         {% csrf_token %}
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Username" name="username" >
-                            <input type="password" class="form-control" placeholder="Password" name="psw" >
-                            <button class="btn btn-primary" type="submit">Login</button>
-                            <a class="btn btn-link" href="signup">Sign Up</a>
+                            <input type="text" class="form-control rounded rounded-3" placeholder="Username" name="username" >
+                            <input type="password" class="form-control mx-1 rounded rounded-3" placeholder="Password" name="password" >
+                            <button class="btn btn-outline-primary mx-1" type="submit">Login</button>
+                            <a class="btn btn-outline-success mx-1 " href="{% url 'registration' %}">Sign Up</a>
                         </div>
                     </form>
                 </li>
                 {% endif %}
+                <!-- About Us -->
+                <li>
+                    <a class="m-3" href="{% url 'about' %}">About Us</a>
+                </li>
             </ul>
         </div>
     </nav>

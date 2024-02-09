@@ -6,16 +6,21 @@ from . import views
 
 urlpatterns = [
  
+    # User registration : 
+    path ( route = 'user_register' , view = views.user_registration , name = 'registration' )  ,
+
+    # User login : 
+    path ( route = 'user_login' , view = views.user_login , name = 'login' ) ,
+
+    # User Logout : 
+    path ( route = 'user_logout' , view = views.user_logout , name = 'logout' ) ,
+
     # About Us :
     path ( route = 'about' , view = views.about_us , name = "about") ,
+
     # Contact Us :
     path ( route = 'contact', view = views.contact_us, name="contact" ) ,
 
-    # path for registration
-
-    # path for login
-
-    # path for logout
 
     path(route='', view=views.get_dealerships, name="home"),
 
