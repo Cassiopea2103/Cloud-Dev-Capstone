@@ -29,7 +29,7 @@ APPEND_SLASH = True
 
 ALLOWED_HOSTS = ['localhost','*']
 
-CSRF_TRUSTED_ORIGINS = ['<Your app URL>']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000/*']
 
 
 # Application definition
@@ -87,6 +87,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 
 # Password validation

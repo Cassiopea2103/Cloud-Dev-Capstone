@@ -1,16 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+{% extends 'base.html' %}
 
-</head>
-    <body>
-    <!--Add review form here -->
-    </body>
-</html>
+
+{% block main %}
+    <form class="p-4 w-auto h-auto rounded rounded-5" action="{% url 'add_review' dealer_id %}"  method="post">
+        {% csrf_token %}
+        
+        <h1 class="text-center text-primary ">Review for <span class="text-success fw-bold">{{dealer_name}}</span></h1><br>
+        <label for="name"><b>Name</b></label>
+        <input class="form-control mb-3" type="text" placeholder="Enter Your Name: " name="name" required>
+        <label for="content"><b>Review</b></label>
+        <textarea class="form-control mb-3" id="content" name="content" rows="2" required placeholder="Write your review here: "></textarea>
+        <input class="form-check-input mb-3 ml-0 p-5" type="checkbox" name="purchasecheck" id="purchasecheck">
+        <label for="purchasecheck" class="ml-4"><b>Did your purchase from this dealership?</b></label>
+        <label for="car" class="ms-3"><b>Select vehicle (if purchased)</b></label>
+        <select name="car" id="car" class="form-select" required>
+            {% for car in cars %}
+                <option selected value="{{car.make.name}}|{{car.name}}|{{ car.year|date:'Y' }}">{{ car.year|date:"Y" }} {{car.make.name}} {{car.name}}</option>
+            {% endfor %}
+        </select>
+        
+        <br>
+        <label for="purchase_date"><b>When was this purchased?</b></label>
+        <input class="date-own form-control" type="date" name="purchase_date" id="purchase_date">
+        <br>
+        <button class="btn btn-success  btn-lg" type="submit">Submit Review</button>
+    </form>
+{% endblock main %}
+    
